@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Event Management System
 
 ## Overview
@@ -35,3 +36,6 @@ event_management/
 1. Clone the repo: `git clone <repo-url>`
 2. Install dependencies: `pip install -r requirements.txt`
 3. Run server: `python manage.py runserver`
+=======
+# event-manager-django
+>>>>>>> 4990cb7849ec6bf55df14e3e99b3dbe5d7e5c492
