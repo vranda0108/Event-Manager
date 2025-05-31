@@ -1,8 +1,41 @@
 {% extends "events/base.html" %}
 
 {% block content %}
-<h1>Profile</h1>
-<p>Username: {{ user.username }}</p>
-<p>Email: {{ user.email }}</p>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body">
+          <h2 class="card-title text-center text-primary mb-4 fw-bold">👤 User Profile</h2>
 
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex align-items-center">
+              <span class="me-2 text-secondary fw-semibold">👥 Username:</span>
+              <span class="text-dark fs-6">{{ user.username }}</span>
+            </li>
+
+            <li class="list-group-item d-flex align-items-center justify-content-between">
+              <div>
+                <span class="me-2 text-secondary fw-semibold">📧 Email:</span>
+                {% if user.email %}
+                  <span class="text-dark fs-6">{{ user.email }}</span>
+                {% else %}
+                  <span class="text-danger">No email provided</span>
+                {% endif %}
+              </div>
+
+              <a href="{% url 'edit_profile' %}" class="btn btn-sm btn-outline-primary ms-3">Edit</a>
+            </li>
+          </ul>
+
+          <div class="text-center mt-4">
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger rounded-pill px-4">
+              🚪 Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

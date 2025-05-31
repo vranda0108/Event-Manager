@@ -1,107 +1,113 @@
 {% extends "events/base.html" %}
 {% block content %}
-<h1>Add Event</h1>
 
-<div class="container">
-    <main>
-        {% if error_message %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow border-0 rounded-4">
+        <div class="card-body p-5">
+
+          <h2 class="text-center text-primary mb-4 fw-bold">📅 Add New Event</h2>
+
+          {% if error_message %}
             <div class="alert alert-danger" role="alert">
-                {{ error_message }}
+              {{ error_message }}
             </div>
-        {% endif %}
+          {% endif %}
 
-        <div class="row g-5 mt-4">
-            <div class="col-md-7 col-lg-8">
-                <form class="needs-validation" method="post" action="{% url 'add-event' %}">
-                    {% csrf_token %}
+          <form method="POST" class="needs-validation" novalidate>
+            {% csrf_token %}
 
-                    <div>
-                        <label class="form-label" for="name">Event Name:</label>
-                        <input class="form-control" type="text" id="name" name="name" required maxlength="100"/>
-                    </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">🎯 Event Name</label>
+                <input type="text" class="form-control" name="name" required maxlength="100">
+              </div>
 
-                    <div>
-                        <label class="form-label" for="description">Description:</label>
-                        <textarea class="form-control" id="description" name="description" required></textarea>
-                    </div>
+              <div class="col-md-6">
+                <label class="form-label">📍 Location</label>
+                <input type="text" class="form-control" name="location" maxlength="100">
+              </div>
 
-                    <div>
-                        <label class="form-label" for="date">Date:</label>
-                        <input class="form-control" type="date" id="date" name="date" required/>
-                    </div>
+              <div class="col-12">
+                <label class="form-label">📝 Description</label>
+                <textarea class="form-control" name="description" rows="3" required></textarea>
+              </div>
 
-                    <div>
-                        <label class="form-label" for="start_time">Start Time:</label>
-                        <input class="form-control" type="time" id="start_time" name="start_time" required/>
-                    </div>
+              <div class="col-md-4">
+                <label class="form-label">📆 Date</label>
+                <input type="date" class="form-control" name="date" required>
+              </div>
 
-                    <div>
-                        <label class="form-label" for="end_time">End Time:</label>
-                        <input class="form-control" type="time" id="end_time" name="end_time" required/>
-                    </div>
+              <div class="col-md-4">
+                <label class="form-label">⏰ Start Time</label>
+                <input type="time" class="form-control" name="start_time" required>
+              </div>
 
-                    <div>
-                        <label class="form-label" for="is_public">Publish now?</label>
-                        <input class="form-check" type="checkbox" id="is_public" name="is_public"/>
-                    </div>
+              <div class="col-md-4">
+                <label class="form-label">⏳ End Time</label>
+                <input type="time" class="form-control" name="end_time" required>
+              </div>
 
-                    <div>
-                        <label class="form-label" for="location">Location:</label>
-                        <input class="form-control" type="text" id="location" name="location" maxlength="100"/>
-                    </div>
+              <div class="col-md-6">
+                <label class="form-label">👥 Max Participants</label>
+                <input type="number" class="form-control" name="max_participants" min="1" required>
+              </div>
 
-                    <div>
-                        <label class="form-label" for="max_participants">Max Participants:</label>
-                        <input class="form-control" type="number" id="max_participants" name="max_participants" required min="1"/>
-                    </div>
+              <div class="col-md-6">
+                <label class="form-label">📊 Event Status</label>
+                <select class="form-select" name="status" required>
+                  <option value="upcoming">Upcoming</option>
+                  <option value="ongoing">Ongoing</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
 
-                    <div>
-                        <label class="form-label" for="status">Event Status:</label>
-                        <select class="form-select" id="status" name="status">
-                            <option value="upcoming">Upcoming</option>
-                            <option value="ongoing">Ongoing</option>
-                            <option value="completed">Completed</option>
-                        </select>
-                    </div>
+              <div class="col-md-6">
+                <label class="form-label">🏛️ Venue Name</label>
+                <input type="text" class="form-control" name="venue_name" required>
+              </div>
 
-                    <div class="form-group mt-2">
-                        <label for="venue_name">Venue Name:</label>
-                        <input type="text" class="form-control" id="venue_name" name="venue_name" placeholder="Enter venue name" required>
-                    </div>
+              <div class="col-md-6">
+                <label class="form-label">📬 Address</label>
+                <input type="text" class="form-control" name="address">
+              </div>
 
-                    <div class="form-group mt-2 form-check">
-                        <input type="checkbox" class="form-check-input" id="is_virtual" name="is_virtual">
-                        <label class="form-check-label" for="is_virtual">Is Virtual</label>
-                    </div>
+              <div class="col-md-6">
+                <label class="form-label">👤 Capacity</label>
+                <input type="number" class="form-control" name="capacity">
+              </div>
 
-                    <div class="form-group mt-2">
-                        <label for="address">Address:</label>
-                        <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
-                    </div>
+              <div class="col-md-6">
+                <label class="form-label">🔗 Virtual Meeting Link</label>
+                <input type="url" class="form-control" name="virtual_meeting_link" placeholder="https://example.com/meeting">
+              </div>
 
-                    <div class="form-group mt-2">
-                        <label for="capacity">Capacity:</label>
-                        <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Enter capacity">
-                    </div>
+              <div class="col-md-6 form-check mt-4">
+                <input type="checkbox" class="form-check-input" id="is_virtual" name="is_virtual">
+                <label class="form-check-label" for="is_virtual">💻 This is a virtual event</label>
+              </div>
 
-                    <div class="form-group mt-2">
-                        <label for="virtual_meeting_link">Virtual Meeting Link:</label>
-                        <input type="url" class="form-control" id="virtual_meeting_link" name="virtual_meeting_link" placeholder="Enter virtual meeting link">
-                    </div>
-
-                    <button class="mt-4 w-100 btn btn-primary btn-lg" type="submit">Add Event</button>
-                </form>
+              <div class="col-md-6 form-check mt-4">
+                <input type="checkbox" class="form-check-input" id="is_public" name="is_public">
+                <label class="form-check-label" for="is_public">🌐 Publish Now</label>
+              </div>
             </div>
+
+            <div class="text-center mt-5">
+              <button type="submit" class="btn btn-lg btn-success px-5 shadow">
+                ➕ Add Event
+              </button>
+            </div>
+          </form>
         </div>
-    </main>
+      </div>
 
-    <footer class="my-5 pt-5 text-body-secondary text-center text-small">
-        <p class="mb-1">© 2017–2024 Company Name</p>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="#">Privacy</a></li>
-            <li class="list-inline-item"><a href="#">Terms</a></li>
-            <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
-    </footer>
+      <div class="text-center mt-4 text-muted small">
+        <p>© 2017–2024 Event Manager | <a href="#">Privacy</a> • <a href="#">Terms</a> • <a href="#">Support</a></p>
+      </div>
+    </div>
+  </div>
 </div>
+
 {% endblock %}

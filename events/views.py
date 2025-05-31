@@ -9,6 +9,7 @@ from django.core.exceptions import ValidationError
 from django.views import generic
 from django.db.models import Avg
 from events.models import Event, Venue, Ticket, EventReview
+from django.contrib.auth.decorators import login_required
 
 
 # View for listing public events on the index page
@@ -329,3 +330,16 @@ def BuyTicket(request, pk):
         return render(request, "events/buy_ticket.html", {"event": event, "user": user, "ticket": ticket})
 
     return render(request, "events/buy_ticket.html", {"event": event, "user": user})
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if email:
+            request.user.email = email
+            request.user.save()
+            messages.success(request, 'Email updated successfully!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Please enter a valid email.')
+    return render(request, 'events/edit_profile.html')
