@@ -1,19 +1,27 @@
 import os
 from pathlib import Path
 import dj_database_url
-from decouple import config
+from decouple import config, Csv
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Secret key from environment
-SECRET_KEY = config("SECRET_KEY")
+# Secret key from environment, fallback to a dummy key for local dev (optional)
+SECRET_KEY = config("SECRET_KEY", default="django-insecure-dummykey-for-dev")
 
-# Debug mode (use False in production)
+# Debug mode (False in production)
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-# Allowed hosts from environment or default
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost").split(",")
+# Allowed hosts loaded from .env, split by comma
+# Use decouple.Csv helper to parse CSV into list properly
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS",
+    default="localhost,127.0.0.1",
+    cast=Csv()
+)
+
+# Uncomment to debug ALLOWED_HOSTS at startup (remove in production)
+# print("ALLOWED_HOSTS =", ALLOWED_HOSTS)
 
 # Application definition
 INSTALLED_APPS = [
@@ -47,7 +55,7 @@ AUTHENTICATION_BACKENDS = [
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["templates"],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -66,7 +74,7 @@ WSGI_APPLICATION = "event_manager.wsgi.application"
 DATABASES = {
     "default": dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600
+        conn_max_age=600,
     )
 }
 
