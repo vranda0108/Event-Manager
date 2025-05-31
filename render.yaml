@@ -1,13 +1,13 @@
 services:
   - type: web
-    name: event-manager
-    env: python
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
-    startCommand: "gunicorn event_manager.wsgi"
+    name: django-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn yourprojectname.wsgi:application
     envVars:
-      - key: DEBUG
-        value: "False"
+      - key: DJANGO_SETTINGS_MODULE
+        value: yourprojectname.settings
       - key: SECRET_KEY
-        value: "your-secret-key"
-      - key: ALLOWED_HOSTS
-        value: "event-manager-1-ojz1.onrender.com"
+        value: your-secret-key
+      - key: DEBUG
+        value: false

@@ -6,22 +6,18 @@ from decouple import config, Csv
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Secret key from environment, fallback to a dummy key for local dev (optional)
+# Secret key from environment
 SECRET_KEY = config("SECRET_KEY", default="django-insecure-dummykey-for-dev")
 
 # Debug mode (False in production)
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-# Allowed hosts loaded from .env, split by comma
-# Use decouple.Csv helper to parse CSV into list properly
+# Allowed hosts for Render deployment
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
-    default="localhost,127.0.0.1",
+    default="localhost,127.0.0.1,event-manager-2-s58y.onrender.com",
     cast=Csv()
 )
-
-# Uncomment to debug ALLOWED_HOSTS at startup (remove in production)
-# print("ALLOWED_HOSTS =", ALLOWED_HOSTS)
 
 # Application definition
 INSTALLED_APPS = [
@@ -92,7 +88,7 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Static files
+# Static files settings
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
