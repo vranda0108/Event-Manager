@@ -7,13 +7,13 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Secret key from environment
-SECRET_KEY = config("django-insecure-9=j2t=&9xl(v+14z+v#b0pfrwwfp=t0p29@82agg53koo3p8pq")
+SECRET_KEY = config("SECRET_KEY")
 
 # Debug mode (use False in production)
 DEBUG = config("DEBUG", default=False, cast=bool)
 
 # Allowed hosts from environment or default
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost").split(",")
 
 # Application definition
 INSTALLED_APPS = [
