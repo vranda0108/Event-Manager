@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Event Management System
 
 ## Overview
